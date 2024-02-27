@@ -24,13 +24,13 @@ public class TaskService {
     public void editTask(int id, String description){
         Connection connection=taskRepo.createConnection();
         try {
-            String status = "[Не выполнено]";
             String query = "UPDATE tasks SET description = ? , status = ?  WHERE id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, description);
-                preparedStatement.setString(2, status);
+                preparedStatement.setString(2, Status.IN_PROGRESS.name());
                 preparedStatement.setInt(3, id);
                 preparedStatement.executeUpdate();
+                System.out.println("Задача успешно отредактирована!");
             }
         } catch (SQLException e) {
             e.printStackTrace();
